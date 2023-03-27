@@ -43,7 +43,7 @@ exports.deleteTodo = async (req, res) => {
   try {
     const todoDelete = await Todo.findByIdAndRemove({ _id: req.params.id });
     if (!todoDelete) {
-      res.status(401).send({ status: false, message: "todo Not Found" });
+     return res.status(401).send({ status: false, message: "todo Not Found" });
     }
     res
       .status(201)
@@ -53,6 +53,6 @@ exports.deleteTodo = async (req, res) => {
         data: todoDelete,
       });
   } catch (error) {
-    res.status(500).send({ status: false, message: error.message });
+    return res.status(500).send({ status: false, message: error.message });
   }
 };

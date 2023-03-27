@@ -17,10 +17,23 @@ reducers:{
     getTodos:(state,action)=>{
         // console.log(action.payload.data,"<-----todoReducer");
         state.todos = action.payload.data
+    },
+    deleteTodos:(state,action)=>{
+        console.log(action.payload,"<-----todoReducer");
+        const resultedTodo = state.todos.filter((item)=>{
+           return item._id===action.payload._id
+        })
+        state.todos=resultedTodo
+    },
+    logout:(state,action)=>{
+        state.token = null
+        localStorage.removeItem("token")
     }
 }
 
 })
 
-export const {createTodo,getTodos} = todoSlice.actions
+
+
+export const {createTodo,getTodos,deleteTodos,logout} = todoSlice.actions
 export default todoSlice.reducer

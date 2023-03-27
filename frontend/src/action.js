@@ -63,7 +63,7 @@ export const getTodo_api = async()=>{
 
 
 export const deleteTodo_api = async(id)=>{
-  console.log(id);
+  // console.log(id);
   const res = await fetch(`${baseurl}/todo/remove/${id}`,{
     method: "delete",
     headers: {
@@ -72,7 +72,7 @@ export const deleteTodo_api = async(id)=>{
     },
   })
   const result = await res.json()
-  console.log(result);
+  console.log(result,"<------------api call value");
   return result
 }
 
