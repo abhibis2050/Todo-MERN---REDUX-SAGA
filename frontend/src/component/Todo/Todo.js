@@ -30,7 +30,7 @@ const navigate = useNavigate();
        <ul>
        {
         todos.map((todoItem)=>{ 
-          return  <li key={todoItem.Id}>
+          return  <li key={todoItem.Id} onDoubleClick={()=>dispatch({type:"DELETE_TODO",payload:todoItem._id})}>
             {todoItem.todo}
           </li>
            

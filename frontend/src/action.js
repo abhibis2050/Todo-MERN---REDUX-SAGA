@@ -62,5 +62,20 @@ export const getTodo_api = async()=>{
 }
 
 
+export const deleteTodo_api = async(id)=>{
+  console.log(id);
+  const res = await fetch(`${baseurl}/todo/remove/${id}`,{
+    method: "delete",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  })
+  const result = await res.json()
+  console.log(result);
+  return result
+}
+
+
 
 

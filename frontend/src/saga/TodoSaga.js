@@ -1,5 +1,5 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { createTodo_api, getTodo_api } from "../action";
+import { createTodo_api, deleteTodo_api, getTodo_api } from "../action";
 import { createTodo, getTodos } from "../reducers/todoReducer";
 
 function* addTodo(action) {
@@ -29,10 +29,21 @@ function* getTodo() {
   }
 }
 
+function* deleteTodo(action) {
+    try {
+        console.log(action.payload, "<------ action.payload");
+      const deleteTodoData = yield call(deleteTodo_api,action.payload);
+      console.log(deleteTodoData, "<------ todo Data todoSaga");
+    //   yield put(getTodos(getTodoData));
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
 function* todoSaga() {
   yield takeLatest("CREATE_TODO", addTodo);
   yield takeLatest("GET_TODO", getTodo);
-  //   yield takeLatest("DELETE_TODO", deleteTodo);
+    yield takeLatest("DELETE_TODO", deleteTodo);
 }
 
 export default todoSaga;
