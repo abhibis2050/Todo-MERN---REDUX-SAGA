@@ -21,7 +21,7 @@ reducers:{
     deleteTodos:(state,action)=>{
         console.log(action.payload,"<-----todoReducer");
         const resultedTodo = state.todos.filter((item)=>{
-           return item._id===action.payload._id
+           return item._id!==action.payload._id
         })
         state.todos=resultedTodo
     },
