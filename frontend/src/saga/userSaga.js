@@ -2,11 +2,14 @@ import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { login_api, register_api } from "../action";
 import { register, login } from "../reducers/userReducer";
 
-function* registerUser({ payload: { name, email, password } }) {
+function* registerUser({ payload: { name, email, password,navigate } }) {
   try {
     const data = yield register_api({ name, email, password });
     console.log(data, "data");
     yield put(register(data));
+    if(data.success===true){
+     navigate("/")
+    }
   } catch (error) {
     console.log(error.message);
   }
