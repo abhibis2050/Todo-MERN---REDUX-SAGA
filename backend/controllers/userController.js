@@ -5,15 +5,16 @@ const bcrypt = require("bcrypt");
 exports.registerUser = async (req, res) => {
   try {
     const { name, email, password, pic } = req.body;
-    if (
-      !name 
-      ||
-       !email || !password) {
-      return res.status(400).send({ status:false,message: "Please Enter all the Feilds" });
+    if (!name || !email || !password) {
+      return res
+        .status(400)
+        .send({ status: false, message: "Please Enter all the Feilds" });
     }
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).send({status:false, message: "User already exists" });
+      return res
+        .status(400)
+        .send({ status: false, message: "User already exists" });
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
@@ -26,13 +27,13 @@ exports.registerUser = async (req, res) => {
 
     if (user) {
       return res.status(201).send({
-        success:true,
+        success: true,
         _id: user._id,
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
         token: generateToken({ id: user._id }),
-        message:"User Created Successfully"
+        message: "User Created Successfully",
       });
     } else {
       return res.status(400).send({ message: "user not found" });
