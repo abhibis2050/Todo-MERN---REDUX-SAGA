@@ -14,11 +14,31 @@ app.use(bodyParser.json());
 app.use(morgan("tiny"));
 // app.use(cookieParser(process.env.JWT_SECRET_REFRESH_TOKEN))
 
+
+const allowedDomains = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://localhost:5174",
+  "http://localhost:5173",
+  "http://localhost:5175",
+];
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: function (origin, callback) {
+      // allow requests with no origin
+      // (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedDomains.indexOf(origin) === -1) {
+        var msg =
+          "The CORS policy for this site does not " +
+          "allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    // origin: "https://www.drivado.com",
     credentials: true,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     preflightContinue: false,
     optionsSuccessStatus: 200,
   })
@@ -35,7 +55,7 @@ app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/todo", require("./routes/todoRoutes"));
 
 // port
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6300;
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
